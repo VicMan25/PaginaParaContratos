@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CalcLaboral CO — Seguridad Social & Prestaciones</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Background decoration -->
+  <div class="bg-grid"></div>
+  <div class="bg-blob blob1"></div>
+  <div class="bg-blob blob2"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">⚖</div>
+      <div>
+        <span class="logo-title">CalcLaboral<span class="logo-co">CO</span></span>
+        <span class="logo-sub">Legislación Laboral Colombiana</span>
+      </div>
+    </div>
+    <div class="header-badge">
+      <span class="dot"></span> Normativa 2026
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="main">
+
+    <!-- Step indicator -->
+    <div class="steps-bar">
+      <div class="step active" id="step-ind-1">
+        <span class="step-num">01</span>
+        <span class="step-label">Datos del trabajador</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="step-ind-2">
+        <span class="step-num">02</span>
+        <span class="step-label">Tipo de contrato</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="step-ind-3">
+        <span class="step-num">03</span>
+        <span class="step-label">Resultados</span>
+      </div>
+    </div>
+
+    <!-- FORM SECTION -->
+    <section class="form-section" id="form-section">
+
+      <!-- Panel 1: Datos del trabajador -->
+      <div class="form-panel active" id="panel-1">
+        <div class="panel-header">
+          <h2>Información del trabajador</h2>
+          <p>Ingresa los datos básicos para el cálculo</p>
+        </div>
+        <div class="fields-grid">
+          <div class="field-group full">
+            <label>Nombre completo</label>
+            <input type="text" id="nombre" placeholder="Ej. María González Ruiz" />
+          </div>
+          <div class="field-group">
+            <label>Salario mensual <span class="tag">COP</span></label>
+            <input type="number" id="salario" placeholder="1.750.000" min="0" />
+            <span class="field-hint" id="smmlv-hint"></span>
+          </div>
+          <div class="field-group">
+            <label>Riesgo ARL</label>
+            <select id="arl-nivel">
+              <option value="0.522">Nivel I — 0,522%</option>
+              <option value="1.044">Nivel II — 1,044%</option>
+              <option value="2.436">Nivel III — 2,436%</option>
+              <option value="4.350">Nivel IV — 4,350%</option>
+              <option value="6.960">Nivel V — 6,960%</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>Días laborados en el período</label>
+            <input type="number" id="dias" placeholder="30" min="1" max="360" value="30" />
+          </div>
+          <div class="field-group">
+            <label>Meses laborados (para liquidación)</label>
+            <input type="number" id="meses" placeholder="12" min="0" max="360" value="12" />
+          </div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-primary" onclick="goToPanel(2)">Continuar →</button>
+        </div>
+      </div>
+
+      <!-- Panel 2: Tipo de contrato -->
+      <div class="form-panel" id="panel-2">
+        <div class="panel-header">
+          <h2>Tipo de vinculación laboral</h2>
+          <p>Selecciona el tipo de contrato para aplicar las reglas correctas</p>
+        </div>
+
+        <div class="contract-grid">
+          <div class="contract-card" data-type="indefinido" onclick="selectContract(this, 'indefinido')">
+            <div class="contract-icon">📋</div>
+            <div class="contract-info">
+              <h3>Término indefinido</h3>
+              <p>Sin fecha de terminación pactada</p>
+            </div>
+            <div class="contract-check">✓</div>
+          </div>
+          <div class="contract-card" data-type="fijo" onclick="selectContract(this, 'fijo')">
+            <div class="contract-icon">📅</div>
+            <div class="contract-info">
+              <h3>Término fijo</h3>
+              <p>Con fecha de vencimiento establecida</p>
+            </div>
+            <div class="contract-check">✓</div>
+          </div>
+          <div class="contract-card" data-type="obra" onclick="selectContract(this, 'obra')">
+            <div class="contract-icon">🔨</div>
+            <div class="contract-info">
+              <h3>Obra o labor</h3>
+              <p>Hasta la culminación de la obra</p>
+            </div>
+            <div class="contract-check">✓</div>
+          </div>
+          <div class="contract-card" data-type="parcial" onclick="selectContract(this, 'parcial')">
+            <div class="contract-icon">⏱</div>
+            <div class="contract-info">
+              <h3>Medio tiempo / Parcial</h3>
+              <p>Jornada inferior a la máxima legal</p>
+            </div>
+            <div class="contract-check">✓</div>
+          </div>
+          <div class="contract-card" data-type="servicios" onclick="selectContract(this, 'servicios')">
+            <div class="contract-icon">🤝</div>
+            <div class="contract-info">
+              <h3>Prestación de servicios</h3>
+              <p>Contratista independiente — aporta directamente</p>
+            </div>
+            <div class="contract-check">✓</div>
+          </div>
+        </div>
+
+        <!-- Aviso prestación de servicios -->
+        <div class="info-alert" id="servicios-alert" style="display:none">
+          <span class="alert-icon">ℹ</span>
+          <div>
+            <strong>Contrato de prestación de servicios:</strong> El contratista asume la totalidad de los aportes a salud y pensión (no hay ARL a cargo del contratante en este esquema básico). <strong>No aplican</strong> prestaciones sociales ni aportes parafiscales.
+          </div>
+        </div>
+
+        <div class="panel-actions">
+          <button class="btn btn-ghost" onclick="goToPanel(1)">← Atrás</button>
+          <button class="btn btn-primary" onclick="calcular()">Calcular →</button>
+        </div>
+      </div>
+
+      <!-- Panel 3: Resultados -->
+      <div class="form-panel" id="panel-3">
+        <div class="panel-header" id="result-header">
+          <h2>Resultados del cálculo</h2>
+          <p id="result-subtitle"></p>
+        </div>
+
+        <!-- Resumen rápido -->
+        <div class="summary-cards" id="summary-cards"></div>
+
+        <!-- Seguridad Social -->
+        <div class="result-block" id="block-ss">
+          <div class="result-block-header">
+            <h3>🛡 Seguridad Social & Parafiscales</h3>
+            <span class="result-block-badge" id="badge-ss"></span>
+          </div>
+          <div class="result-table-wrap">
+            <table class="result-table">
+              <thead>
+                <tr>
+                  <th>Concepto</th>
+                  <th>Base</th>
+                  <th>%</th>
+                  <th>Empleador / Contratista</th>
+                  <th>Trabajador</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-ss"></tbody>
+              <tfoot id="tfoot-ss"></tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- Prestaciones -->
+        <div class="result-block" id="block-prest" style="display:none">
+          <div class="result-block-header">
+            <h3>📦 Prestaciones Sociales</h3>
+            <span class="result-block-badge" id="badge-prest"></span>
+          </div>
+          <div class="result-table-wrap">
+            <table class="result-table">
+              <thead>
+                <tr>
+                  <th>Concepto</th>
+                  <th>Base de cálculo</th>
+                  <th>Fórmula</th>
+                  <th>Días / Factor</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-prest"></tbody>
+              <tfoot id="tfoot-prest"></tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- Nota legal -->
+        <div class="legal-note" id="legal-note"></div>
+
+        <!-- Acción -->
+        <div class="panel-actions">
+          <button class="btn btn-ghost" onclick="goToPanel(2)">← Modificar</button>
+          <button class="btn btn-accent" onclick="imprimirResultados()">🖨 Imprimir / PDF</button>
+          <button class="btn btn-primary" onclick="resetForm()">Nueva consulta</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Info de referencia -->
+    <aside class="reference-panel">
+      <h4>📌 Referencia rápida 2026</h4>
+      <ul id="reference-list"></ul>
+    </aside>
+
+  </main>
+
+  <footer class="footer">
+    <p>Calculadora basada en normativa laboral colombiana vigente · SMMLV 2026 · Universidad Mariana — Ingeniería de Sistemas</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
