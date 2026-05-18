@@ -5,7 +5,7 @@
 
 // ── Constantes legales 2026 ──────────────────
 const SMMLV  = 1750000;   // Salario mínimo mensual legal vigente 2025
-const AUX_TP = 200000;    // Auxilio de transporte 2025 (≤2 SMMLV)
+const AUX_TP = 250000;    // Auxilio de transporte 2026 (≤2 SMMLV)
 
 // Porcentajes Seguridad Social (% sobre IBC)
 const PCT = {
